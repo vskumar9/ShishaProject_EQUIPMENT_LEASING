@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Registration.css' %}">
+
+</head>
+<body>
+<div class="center">
+    <form class="form_container" method="POST">
+         {% if Error %}
+     <div class="alert alert-danger" role="alert" style="color: red; text-align:center; background-color: #f8d7da; border-color: #f5c6cb;">
+    {{ Error }}
+         </div>
+        {% endif %}
+      {% csrf_token %}
+  <div class="logo_container"></div>
+  <div class="title_container">
+    <p class="title">Admin Login</p>
+    <span class="subtitle">Welcome to Admin login page </span>
+
+  </div>
+  <br>
+  <div class="input_container">
+    <label class="input_label" for="username_field">UserName</label>
+    <input placeholder="username" title="Input title" name="input-username" type="text" class="input_field" id="username_field">
+  </div>
+  <div class="input_container">
+    <label class="input_label" for="password_field">Password</label>
+    <input placeholder="Password" title="Input title" name="input-password" type="password" class="input_field" id="password_field">
+  </div>
+  <button title="Sign In" type="submit" class="sign-in_btn">
+    <span>Sign In</span>
+  </button>
+      </button>
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>home</title>
+   {% load static %}
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="{% static 'home.css' %}">
+<!--   <link rel="icon" href="./images/download.png">-->
+
+</head>
+<body>
+<header class="header">
+   <div class="header-2 ">
+      <div class="flex">
+         <a href="/home" class="logo">Containter Leasing</a>
+         <div class="navbar">
+<!--            <div id="menu-btn" class="fas fa-bars">Booking</div>-->
+            <a href="/Bookedcontainer" class="">Booking</a>
+            <a id="user-btn" href="/logout" class="">Logout</a>
+            {% for i in bookings %}
+            {% endfor %}
+         </div>
+      </div>
+   </div>
+
+</header>
+
+<section class="home" style="background-image: url('{% static 'container.jpg' %}')">
+   <div class="content">
+      <h3>Containter Leasing</h3>
+      <p></p>
+      <h1>WELCOME</h1>
+   </div>
+
+</section>
+
+<section class="pproducts">
+   <h1 class="ptitle">All Containers</h1>
+   <hr>
+   <div class="pbox-container">
+      {% if products %}
+      {% for product in products %}
+      <form action="{% url 'book_container' product.id %}" method="post" class="pbox">
+         {% csrf_token %}
+         <input type="hidden" name="user_id" value="{{ request.user.id }}">
+         <img class="image pic" src="{{ product.Image.url }}" alt="{{ product.Image.url }}">
+         <div><p class="pcontainer"><span>Container:</span> {{ product.Name }}</p></div>
+         <div><p class="pprice"><span>Price:</span> Rs {{ product.Price }}/-</pclass></div>
+         <div><p class="pdesc"><span>Description:</span> {{ product.description }}</p></div>
+         <div><p class="pavai"><span>No.of Containers:</span> {{ product.No_of }}</p></div>
+      </form>
+      {% endfor %}
+      {% else %}
+      <p style="font-size: 50px; user-select: none; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none;">No Containers Available</p>
+      {% endif %}
+   </div>
+</section>
+
+<section class="pproducts">
+   <h1 class="ptitle">Available Containers</h1>
+   <div class="pbox-container">
+      {% if containers %}
+      {% for container, available_quantity in containers %}
+      {% if available_quantity != 0 %}
+      <form action="{% url 'book_container' container.id %}" method="post" class="pbox">
+         {% csrf_token %}
+         <input type="hidden" name="user_id" value="{{ request.user.id }}">
+         <img class="image pic" src="{{ container.Image.url }}" alt="{{ container.Image.url }}">
+         <div><p class="pcontainer"><span>Container:</span> {{ container.Name }}</p></div>
+         <div><p class="pprice"><span>Price:</span> Rs {{ container.Price }}/-</pclass></div>
+         <div><p class="pdesc"><span>Description:</span> {{ container.description }}</p></div>
+         <div><p class="pavai"><span>Available Quantity:</span> {{ available_quantity }}</p></div>
+         <input class="pvalue" type="number" name="quantity" min="1" max="{{ available_quantity }}" value="1">
+         <input type="submit" value="Book Now" name="Booking" class="pbtn">
+         {% endif %}
+      </form>
+      {% endfor %}
+      {% else %}
+      <p style="font-size: 50px; user-select: none; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none;">No Containers Available</p>
+      {% endif %}
+   </div>
+</section>
+
+<section class="about">
+
+   <div class="flex">
+
+      <div class="image">
+         <img src="{% static 'container.jpg' %}" alt=" container." width="50px">
+      </div>
+
+      <div class="content">
+         <h3>about us</h3>
+         <p>Container Leasing More To about my Company</p>
+         <a href="/about" class="btn">read more</a>
+      </div>
+
+   </div>
+
+</section>
+
+<section class="footer">
+
+   <div class="box-container">
+
+      <div class="box">
+         <h3>quick links</h3>
+         <a href="/home">home</a>
+         <a href="/about">about</a>
+         <a href="/Bookedcontainer">Booking</a>
+         <a href="#">contact</a>
+      </div>
+
+      <div class="box">
+         <h3>extra links</h3>
+         <a href="Booking">orders</a>
+      </div>
+
+      <div class="box">
+         <h3>contact info</h3>
+         <p> <i class="fas fa-phone"></i> +91-9701041108 </p>
+         <p> <i class="fas fa-phone"></i> +91-8500853841 </p>
+         <p> <i class="fas fa-envelope"></i> ContainerLeasing@gmail.com </p>
+         <p> <i class="fas fa-map-marker-alt"></i> A.P, india - 516360 </p>
+      </div>
+
+      <div class="box">
+         <h3>follow us</h3>
+         <a href="www.facebook.com"> <i class="fab fa-facebook-f"></i> facebook </a>
+         <a href="www.twitter.com"> <i class="fab fa-twitter"></i> twitter </a>
+         <a href="www.instagram.com"> <i class="fab fa-instagram"></i> instagram </a>
+         <a href="#"> <i class="fab fa-linkedin"></i> linkedin </a>
+      </div>
+
+   </div>
+
+   <p class="credit"> &copy; copyright  @2023 by <span> Container </span> </p>
+
+</section>
+
+
+</body>
+</html>

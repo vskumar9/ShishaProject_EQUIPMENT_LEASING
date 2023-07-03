@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>products</title>
+   {% load static %}
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+   <!-- custom admin css file link  -->
+<!--   <link rel="icon" href="./images/download.png">-->
+   <link rel="stylesheet" href="{% static 'style.css' %}">
+   <script>
+      function redirectToContainerList() {
+        window.location.href = "http://127.0.0.1:8000/adminpanel/adminProduct/";
+        }
+
+   </script>
+</head>
+<body>
+<header class="header-2">
+   <div class="flex">
+      <a href="/adminpanel" class="logo"> <span>Container Leasing</span> <sup style="color:red" >AdminPanel</sup></a>
+      <nav class="navbar">
+         <a class="abc" href="/adminproduct">products</a>
+         <a class="abc" href="/adminorders">orders</a>
+         <a class="abc" href="/adminusers">users</a>
+      </nav>
+      <div class="account-box">
+         <p>username : Admin</span></p>
+         <a href="/adminlogin" class="delete-btn">logout</a>
+      </div>
+   </div>
+</header>
+<!-- product CRUD section ends -->
+<!-- show products  -->
+<section class="oproducts">
+   <div class="obox-container">
+      {% for i in product %}
+      <div class="obox">
+         <img class="image" src="{{ i.Image.url }}" alt="{{ i.Image.url }}" width="50px", height="50px">
+         <div class="oname"><p class="Name"><span>Container Name:</span> {{ i.Name }}</p></div>
+         <div class="oprice"><p class="Price"><span>Price:</span> {{ i.Price }}/-</p></div>
+         <div class="odesc"><p class="Desc"><span>Description:</span> {{ i.description }}</p></div>
+         <div class="ono_of"><p class="No_"><span>No.of Containers:</span> {{ i.No_of }}</p></div>
+         <a href="{% url 'delete_product' i.id %}" class="delete-btn" style="margin:220px;">delete</a>
+      </div>
+      {% endfor %}
+   </div>
+</section>
+</body>
+</html>

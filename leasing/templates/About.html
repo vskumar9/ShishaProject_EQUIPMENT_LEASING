@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>about</title>
+      {% load static %}
+
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+   <!-- custom css file link  -->
+      <link rel="stylesheet" href="{% static 'home.css' %}">
+
+
+
+</head>
+<body>
+
+
+<header class="header">
+   <div class="header-2 ">
+      <div class="flex">
+         <a href="/home" class="logo">Containter Leasing</a>
+         <div class="navbar">
+<!--            <div id="menu-btn" class="fas fa-bars">Booking</div>-->
+            <a href="/Bookedcontainer" class="">Booking</a>
+            <a id="user-btn" href="/logout" class="">Logout</a>
+            {% for i in bookings %}
+            {% endfor %}
+         </div>
+      </div>
+   </div>
+
+</header>
+
+<div class="heading">
+   <h3>about us</h3>
+   <p> <a href="/home">home</a> / about </p>
+</div>
+
+<section class="about">
+
+   <div class="flex">
+
+      <div class="image">
+         <img src="{% static 'pexels-samuel-wölfl-1427541.jpg' %}" alt="">
+      </div>
+
+      <div class="content">
+         <h3>About Us</h3>
+<p>Welcome to Containers Leasing, the premier containers leasing company dedicated to meeting all your storage and shipping needs. With years of industry expertise, we pride ourselves on providing top-quality containers and exceptional customer service.</p>
+<p>At Containers leasing, we understand that every business has unique requirements. Whether you're looking for temporary storage during a renovation, a secure solution for your inventory, or reliable shipping containers for international trade, we have you covered.</p>
+<p>What sets us apart is our commitment to delivering unmatched value and convenience. Our extensive fleet of containers offers a wide range of sizes and specifications to accommodate various cargo types. Each container undergoes rigorous inspections to ensure structural integrity, weather resistance, and security.</p>
+<p>Our team of experienced professionals is dedicated to assisting you throughout the entire leasing process. From providing expert advice on container selection to handling logistics and delivery, we strive to make your experience seamless and hassle-free.</p>
+<p>As an environmentally conscious company, we prioritize sustainability. Our containers are designed to be eco-friendly, with options for energy-efficient modifications and responsible disposal practices.</p>
+<p>Whether you're a small business, a large corporation, or an individual in need of storage or shipping solutions, Containers leasing is your trusted partner. We take pride in building long-term relationships with our clients, and we're committed to meeting and exceeding your expectations.</p>
+<p>Contact us today to discuss your container leasing needs and discover how we can help streamline your storage and shipping operations. Experience the difference with Containers leasing.</p>
+      </div>
+   </div>
+</section>
+<section class="footer">
+
+   <div class="box-container">
+
+      <div class="box">
+         <h3>quick links</h3>
+         <a href="/home">home</a>
+         <a href="/about">about</a>
+         <a href="/Bookedcontainer">Booking</a>
+         <a href="#">contact</a>
+      </div>
+
+      <div class="box">
+         <h3>extra links</h3>
+         <a href="Booking">orders</a>
+      </div>
+
+      <div class="box">
+         <h3>contact info</h3>
+         <p> <i class="fas fa-phone"></i> +91-9701041108 </p>
+         <p> <i class="fas fa-phone"></i> +91-8500853841 </p>
+         <p> <i class="fas fa-envelope"></i> ContainerLeasing@gmail.com </p>
+         <p> <i class="fas fa-map-marker-alt"></i> A.P, india - 516360 </p>
+      </div>
+
+      <div class="box">
+         <h3>follow us</h3>
+         <a href="www.facebook.com"> <i class="fab fa-facebook-f"></i> facebook </a>
+         <a href="www.twitter.com"> <i class="fab fa-twitter"></i> twitter </a>
+         <a href="www.instagram.com"> <i class="fab fa-instagram"></i> instagram </a>
+         <a href="#"> <i class="fab fa-linkedin"></i> linkedin </a>
+      </div>
+
+   </div>
+
+   <p class="credit"> &copy; copyright  @2023 by <span> Container </span> </p>
+
+</section>
+
+
+</body>
+</html>

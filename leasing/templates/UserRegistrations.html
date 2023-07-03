@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Registration.css' %}">
+    <script>
+      function redirectToLogin() {
+        window.location.href = "http://127.0.0.1:8000/login";
+        }
+      function redirect(){
+        window.location.href = "http://127.0.0.1:8000/Terms and Condition";
+        }
+
+
+</script>
+
+</head>
+<body>
+<div class="center">
+
+<div id="message-container"></div>
+
+
+    <form class="form_container" method="post">
+            {% csrf_token %}
+        <div class="logo_container"></div>
+        {% if error_message %}
+        <div class="alert alert-danger" role="alert" style="color: red; text-align:center; background-color: #f8d7da; border-color: #f5c6cb;">
+    {{ error_message }}
+</div>
+        {% else %}
+        {% endif %}
+            <div class="title_container">
+                <p class="title">SignUp to your Account</p>
+                <span class="subtitle">Get started with our app, just create an account and enjoy the experience.</span>
+            </div>
+            <br>
+            <div class="input_container">
+                <label class="input_label" for="firstname_field">Name</label>
+                <input required placeholder="Full Name" title="Inpit title" name="input-firstname" type="text" class="input_field" id="firstname_field">
+            </div>
+            <div class="input_container">
+                <label class="input_label" for="username_field">UserName</label>
+                <input required placeholder="UserName" title="Input title" name="input-username" type="text" class="input_field" id="username_field">
+            </div>
+        <div class="input_container">
+        <label for="input-gender-Male" class="input_label">Gender</label>
+            <div class="radio-button">
+                <input type="radio" name="input-gender" id="input-gender-Male" value="Male" required>
+                <label for="input-gender-Male" class="radio-label" value="Male">Male</label>
+                <input type="radio" name="input-gender" id="input-gender-Female" value="Female">
+                <label for="input-gender-Female" value="Female">Female</label>
+
+            </div>
+            </div>
+            <div class="input_container">
+                <label class="input_label" for="phone_field">Phone</label>
+                <input required placeholder="1234567890" title="Inpit title" name="input-phone" type="text" class="input_field" id="phone_field">
+            </div>
+            <div class="input_container">
+                <label class="input_label" for="email_field">Email</label>
+                <input required placeholder="name@mail.com" title="Inpit title" name="input-email" type="text" class="input_field" id="email_field">
+            </div>
+        <div class="input_container">
+                <label class="input_label" for="address_field">Address</label>
+                <input required placeholder="Amaravathi" title="Inpit title" name="input-address" type="text" class="input_field" id="address_field">
+            </div>
+            <div class="input_container">
+                <label class="input_label" for="password_field">Password</label>
+                <input required placeholder="Password" title="Inpit title" name="input-password" type="password" class="input_field" id="password_field">
+            </div>
+        <div>
+            <input type="checkbox" name="input-check" id="input-check" class="checkbox" required>
+            <label for="input-check" class="note">Accept all Terms & Conditions</label>
+        </div>
+
+            <button title="Sign In" type="submit" class="sign-in_btn">
+                <span>SignUp</span>
+            </button>
+            <div class="separator">
+                <hr class="line">
+                <span>Or</span>
+                <hr class="line">
+            </div>
+
+
+  <button title="Sign In" type="button" class="sign-in_apl" onclick="redirectToLogin()">
+       <a href="/login" class="link" > <span>Sign In</span>  </a>
+  </button>
+  <p class="note" onclick="redirect()" style="cursor: pointer;">Terms of use &amp; Conditions</p>
+</form>
+
+
+</div>
+
+
+</body>
+</html>

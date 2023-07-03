@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>products</title>
+   {% load static %}
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+   <!-- custom admin css file link  -->
+<!--   <link rel="icon" href="./images/download.png">-->
+   <link rel="stylesheet" href="{% static 'users.css' %}">
+</head>
+<body>
+
+<header class="header-2">
+   <div class="flex">
+      <a href="/adminpanel" class="logo"> <span>Container Leasing</span> <sup style="color:red" >AdminPanel</sup></a>
+      <nav class="navbar">
+         <a class="abc" href="/adminproduct">products</a>
+         <a class="abc" href="/adminorders">orders</a>
+         <a class="abc" href="/adminusers">users</a>
+      </nav>
+      <div class="account-box">
+         <p>username : Admin</span></p>
+         <a href="/adminlogin" class="delete-btn">logout</a>
+      </div>
+   </div>
+</header>
+
+ <section class="container">
+      <h1 class="title">User List</h1>
+      <div class="user-list">
+         {% for user in users %}
+         <div class="user-box">
+            <h2>{{ user.user.username }}</h2>
+            <p><strong>Name:</strong> {{ user.FullName }}</p>
+            <p><strong>Email:</strong> {{ user.user.email }}</p>
+            <p><strong>Phone:</strong> {{ user.Phone }}</p>
+            <p><strong>Gender:</strong> {{ user.Gender }}</p>
+            <p><strong>Address:</strong> {{ user.Address }}</p>
+         </div>
+         {% empty %}
+         <p>No users found.</p>
+         {% endfor %}
+      </div>
+   </section>
+
+
+
+
+
+</body>
+</html>

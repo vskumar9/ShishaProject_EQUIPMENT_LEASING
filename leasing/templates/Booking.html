@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>home</title>
+   {% load static %}
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="{% static 'home.css' %}">
+</head>
+<body>
+<header class="header">
+   <div class="header-2 ">
+      <div class="flex">
+         <a href="/home" class="logo">Containter Leasing</a>
+         <div class="navbar">
+            <a href="/home" class="">Home</a>
+            <a id="user-btn" href="/logout" class="">Logout</a>
+            {% for i in bookings %}
+            {% endfor %}
+         </div>
+      </div>
+   </div>
+
+</header>
+<!-- product CRUD section ends -->
+<!-- show products  -->
+<section class="products" style="position: relative;">
+   <div class="box-container" style="position: relative;">
+      {% if container %}
+      {% for booking in container %}
+      <form action="" method="post" class="box">
+         {% csrf_token %}
+         <input type="hidden" name="user_id" value="{{ request.user.id }}">
+         <img class="image pic" src="{{ booking.container.Image.url }}" alt="{{ booking.container.Image }}">
+         <div class="name">{{ booking.container.Name }}</div>
+         <div class="price">Rs {{ booking.container.Price }}/-</div>
+         <p>Description: {{ booking.container.description }}</p>
+         <p>No.of: {{ booking.No_of }}</p>
+         <p>Order Date: {{ booking.date_booked }}</p>
+         {% if booking.confirm == True %}
+         <p style="color: green; "><strong>Your Booking Container Confirmed.</strong></p>
+         {% else %}
+         <p style="color: red;">Your Booking Cancel or Not Confirm. <br>(Within 24HR Costumer Supports Contanct otherwise it's canceled)</p>
+         {% endif %}
+      </form>
+      {% endfor %}
+      {% else %}
+      <p style="font-size: 50px; user-select: none; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none;">You have not booked any containers.</p>
+      {% endif %}
+   </div>
+</section>
+<div>
+   <a href="/home" class="back-link">Back</a>
+</div>
+<section class="about">
+   <div class="flex">
+      <div class="image">
+         <img src="{% static 'container.jpg'%}" alt=" Shop. ">
+      </div>
+      <div class="content">
+         <h3>about us</h3>
+         <p>Container Leasing More To about my Company</p>
+         <a href="/about" class="btn">read more</a>
+      </div>
+   </div>
+</section>
+
+<section class="footer">
+
+   <div class="box-container">
+
+      <div class="box">
+         <h3>quick links</h3>
+         <a href="/home">home</a>
+         <a href="/about">about</a>
+<!--         <a href="shop">shop</a>-->
+<!--         <a href="contact">contact</a>-->
+      </div>
+
+      <div class="box">
+         <h3>extra links</h3>
+         <a href="/Bookedcontainer">orders</a>
+      </div>
+
+      <div class="box">
+         <h3>contact info</h3>
+         <p> <i class="fas fa-phone"></i> +91-9701041108 </p>
+         <p> <i class="fas fa-phone"></i> +91-8500853841 </p>
+         <p> <i class="fas fa-envelope"></i> ContainerLeasing@gmail.com </p>
+         <p> <i class="fas fa-map-marker-alt"></i> A.P, india - 516360 </p>
+      </div>
+
+      <div class="box">
+         <h3>follow us</h3>
+         <a href="www.facebook.com"> <i class="fab fa-facebook-f"></i> facebook </a>
+         <a href="www.twitter.com"> <i class="fab fa-twitter"></i> twitter </a>
+         <a href="www.instagram.com"> <i class="fab fa-instagram"></i> instagram </a>
+         <a href="#"> <i class="fab fa-linkedin"></i> linkedin </a>
+      </div>
+
+   </div>
+
+   <p class="credit"> &copy; copyright  @2023 by <span> Container </span> </p>
+
+</section>
+
+
+</body>
+</html>

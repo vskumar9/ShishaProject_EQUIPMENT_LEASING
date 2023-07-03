@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>products</title>
+   {% load static %}
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+   <!-- custom admin css file link  -->
+<!--   <link rel="icon" href="./images/download.png">-->
+   <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<header class="header-2">
+   <div class="flex">
+      <a href="/adminpanel" class="logo"> <span>Container Leasing</span> <sup style="color:red" >AdminPanel</sup></a>
+      <nav class="navbar">
+         <a class="abc" href="/adminproduct">products</a>
+         <a class="abc" href="/adminorders">orders</a>
+         <a class="abc" href="/adminusers">users</a>
+      </nav>
+      <div class="account-box">
+         <p>username : Admin</span></p>
+         <a href="adminlogin" class="delete-btn">logout</a>
+      </div>
+   </div>
+</header>
+<!-- product CRUD section ends -->
+<!-- show products  -->
+<section class="oproducts">
+   <div class="obox-container">
+      {% if order %}
+         {% for i in order %}
+         <div class="obox">
+            <img class="image" src="{{ i.container.Image.url }}" alt="{{ i.Image.url }}" width="50px" height="50px">
+            <div><p class="ousername"><span>UserName:</span> {{ i.user.username }}</p></div>
+            <div><p class="oname"><span>Name:</span> {{ i.userdetail.FullName }}</p></div>
+            <div><p class="onumber"><span>Number:</span> {{ i.userdetail.Phone }}</p></div>
+            <div><p class="oaddress"><span>Address:</span> {{ i.userdetail.Address }}</p></div>
+            <div><p class="ocontainer"><span>Container:</span> {{ i.container.Name }}</p></div>
+            <div><p class="oprice"><span>Price:</span> {{ i.container.Price }}</p></div>
+            <div><p class="odesc"><span>Description:</span> {{ i.container.description }}</p></div>
+            <div><p class="ono_of"><span>Number of Containers:</span> {{ i.No_of }}</p></div>
+            <div><p class="oBooking"><span>Date of Booking:</span> {{ i.date_booked }}</p></div>
+            <div><p>Once Admin Approve we can't to change.</p></div>
+            {% if i.confirm == False %}
+            <a href="{% url 'approve_product' i.id %}" style="margin-top: 50px;" class="approve-btn">Approved</a>
+            <hr>
+            {% else %}
+            <p style="margin-top: 50px;" class="notapprove-btn" disabled>Container Approved Successful.</p>
+            <hr>
+<!--            <a href="{% url 'decline_approve_product' i.id %}" style="margin-top: 50px;" class="notapprove-btn" disabled>Not-Approved</a>-->
+
+
+            {% endif %}
+         </div>
+         {% endfor %}
+      {% else %}
+         <p style="user-select: none; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none;">No Orders</p>
+      {% endif %}
+   </div>
+</section>
+
+</body>
+</html>

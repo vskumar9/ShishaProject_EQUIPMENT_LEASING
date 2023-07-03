@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Registration.css' %}">
+  <script>
+      function redirectToReg() {
+        window.location.href = "http://127.0.0.1:8000";
+        }
+
+       function redirect(){
+        window.location.href = "http://127.0.0.1:8000/Terms and Condition";
+        }
+
+   </script>
+
+</head>
+<body>
+<div class="center">
+    <form class="form_container" method="POST">
+      {% csrf_token %}
+      {% if error %}
+     <div class="alert alert-danger" role="alert" style="color: red; text-align:center; background-color: #f8d7da; border-color: #f5c6cb;">
+    {{ error }}
+</div>
+      {% endif %}
+  <div class="logo_container"></div>
+  <div class="title_container">
+    <p class="title">Login to your Account</p>
+    <span class="subtitle">Get started with our app, just create an account and enjoy the experience.</span>
+  </div>
+  <br>
+  <div class="input_container">
+    <label class="input_label" for="username_field">UserName</label>
+    <input placeholder="UserName" title="Input title"  name="input-username" type="text" class="input_field" id="username_field">
+  </div>
+  <div class="input_container">
+    <label class="input_label" for="password_field">Password</label>
+    <input placeholder="Password" title="Input title" name="input-password" type="password" class="input_field" id="password_field">
+  </div>
+  <button title="Sign In" type="submit" class="sign-in_btn">
+    <span>Sign In</span>
+  </button>
+
+  <div class="separator">
+    <hr class="line">
+    <span>Or</span>
+    <hr class="line">
+  </div>
+  </button>
+
+  <button title="Sign In" type="button" class="sign-in_apl" onclick=""redirectToReg() >
+    <a href="/" class="link">
+    <span>SignUp</span></a>
+  </button>
+  <p class="note" onclick="redirect()" style="cursor: pointer;">Terms of use &amp; Conditions</p>
+</form>
+
+</div>
+
+</body>
+</html>
