@@ -14,9 +14,16 @@ def LoginPage(request):
         pass1 = request.POST.get('input-password')
         try:
             user = authenticate(request, username=username, password=pass1)
-            if user is not None:
+
+            if user is not None and user.is_staff:
+                # Login Admin
                 login(request, user)
-                return redirect('home')
+                return redirect('/adminpanel')  # Redirect to admin dashboard
+            elif user is not None:
+                # Login User
+                login(request, user)
+                return redirect('home')  # Redirect to USER dashboard
+
             else:
                 return render(request, 'UserLogin.html', {'error': 'UserName or Password Wrong Try Again!'})
         except:
@@ -38,6 +45,7 @@ def SignupPage(request):
         check = request.POST.get('input-check') == 'on'
 
         # Check if the username already exists
+
         if User.objects.filter(username=username).exists():
             return render(request, 'UserRegistrations.html', {'error_message': 'Username already exists.'})
         if User.objects.filter(email=email).exists():
@@ -114,7 +122,8 @@ def Conditions(request):
     return render(request, 'Conditions.html')
 
 
-# User when the leave the website to click on the logout link to redirect the login page to remove the temporary site user data
+# User when they leave the website to click on the logout link to redirect the login page to remove the temporary site
+# user data
 def LogoutPage(request):
     logout(request)
     return redirect('login')
@@ -142,6 +151,7 @@ def AdminLoginPage(request):
     return render(request, 'Adminlogin.html')
 
 
+# When admin login using the login page to redirect to admin panel this is admin home page this panel to add containers
 @login_required(login_url="adminlogin")
 def AdminPanel(request):
     if request.method == 'POST':
@@ -154,9 +164,9 @@ def AdminPanel(request):
         ADD_PRODUCT.save()
 
     return render(request, 'Admin_Product.html')
-    # return render(request,'Admin_Product.html')
 
 
+# When admin delete the containers to called this function
 @login_required(login_url="adminlogin")
 def delete_product(request, id):
     product = Container.objects.get(id=id)
@@ -164,6 +174,7 @@ def delete_product(request, id):
     return redirect('/adminpanel/adminProduct')  # Redirect to the product list view
 
 
+# When order delete the containers to call this function
 @login_required(login_url="adminlogin")
 def delete_order(request, id):
     product = Booking.onject.get(id=id)
@@ -171,6 +182,7 @@ def delete_order(request, id):
     return redirect('/adminorders')
 
 
+# when click on the button show containers to display the all containers details and add containers
 @login_required(login_url="adminlogin")
 def Product_Data(request):
     if request.method == 'POST':
@@ -188,18 +200,21 @@ def Product_Data(request):
     return render(request, 'Admin_Product.html', {'product': details})
 
 
+# show containers to display the all containers details
 @login_required(login_url="adminlogin")
 def Producr_Data_sep(request):
     details = Container.objects.all()
     return render(request, 'Admin_Product_sep.html', {'product': details})
 
 
+# Display the all orders
 @login_required(login_url="adminlogin")
 def Admin_Orders(request):
     Orders = Booking.objects.all()
     return render(request, 'Admin_Orders.html', {'order': Orders})
 
 
+# When Admin click on the approve button to call this function to approve the containers
 @login_required(login_url="adminlogin")
 def Approve_product(request, id):
     product = Booking.objects.get(id=id)
@@ -208,6 +223,7 @@ def Approve_product(request, id):
     return redirect('adminOrders')  # Redirect to the product list view
 
 
+# Once Admin Approve the container Decline back to Approval
 def Decline_Approve_Product(request, id):
     product = Booking.objects.get(id=id)
     product.confirm = False
@@ -215,9 +231,14 @@ def Decline_Approve_Product(request, id):
     return redirect('adminOrders')  # Redirect to the product list view
 
 
+# All users data to Display the admin site
 @login_required(login_url="adminlogin")
 def Admin_Users(request):
     users = UserDetails.objects.all()
     return render(request, 'Admin_Users.html', {'users': users})
 
 
+# the Admin is leave the website to call the logout button click to call the function
+def AdminLogoutPage(request):
+    logout(request)
+    return redirect('adminlogin')

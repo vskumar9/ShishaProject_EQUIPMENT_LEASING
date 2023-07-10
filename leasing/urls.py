@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import SignupPage, LoginPage, HomePage, LogoutPage, AdminLoginPage, AdminPanel, Product_Data, \
     delete_product, Producr_Data_sep, Admin_Orders, Approve_product, Decline_Approve_Product, Admin_Users, \
-    book_container, Booking_view, AboutPage, Conditions
+    book_container, Booking_view, AboutPage, Conditions, AdminLogoutPage
+from django.contrib.auth import views as auth_views
 
 # URLs to redirect to the help of html pages
 
@@ -15,8 +16,19 @@ urlpatterns = [
     path('adminorders/approve/<int:id>/', Approve_product, name='approve_product'),
     path('adminorders/declineapprove/<int:id>/', Decline_Approve_Product, name='decline_approve_product'),
     path('adminusers/', Admin_Users, name='adminusers'),
+    path('adminlogout/', AdminLogoutPage, name='adminlogout'),
 
-    path('Terms and Condition/',Conditions, name='TermsAndCondition'),
+    path('Terms and Condition/', Conditions, name='TermsAndCondition'),
+
+    path('reset_password/', auth_views.PasswordResetView.as_view(template_name='ResetPassword.html'),
+         name='reset_password'),
+    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name='Reset Send.html'),
+         name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='Reset.html'),
+         name='password_reset_confirm'),
+    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='Reset '
+                                                                                                'Completed.html'
+                                                                                  ), name='password_reset_complete'),
 
     path('', SignupPage, name='Signup'),
     path('login/', LoginPage, name='login'),

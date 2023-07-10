@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Page</title>
+        {% load static %}
+    <link rel="stylesheet" href="{% static 'emailsent.css' %}">
+</head>
+<body>
+<div class="bg-image"></div>
+<div class="center">
+    <div class="form-container">
+      <div class="logo-container">
+        Enter New Password
+      </div>
+        <p>Please enter your new password twice, so we can verify you typed it in correctly.</p>
+
+      <form class="form" method="POST">
+          {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+<!--          <input type="text" id="email" name="email" placeholder="Enter your email" required="">-->
+        </div>
+
+        <button class="form-submit-btn" type="submit">Change Password</button>
+      </form>
+
+<!--      <p class="signup-link">-->
+<!--        Don't have an account?-->
+<!--        <a href="{% url 'Signup' %}" class="signup-link link"> Sign up now</a>-->
+<!--      </p>-->
+    </div>
+</div>
+</body>
+</html>

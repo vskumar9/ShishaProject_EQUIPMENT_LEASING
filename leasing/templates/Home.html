@@ -21,6 +21,7 @@
          <a href="/home" class="logo">Containter Leasing</a>
          <div class="navbar">
 <!--            <div id="menu-btn" class="fas fa-bars">Booking</div>-->
+            <a>Welcome, {{ user.username }}</a>
             <a href="/Bookedcontainer" class="">Booking</a>
             <a id="user-btn" href="/logout" class="">Logout</a>
             {% for i in bookings %}
@@ -66,26 +67,31 @@
    <h1 class="ptitle">Available Containers</h1>
    <div class="pbox-container">
       {% if containers %}
-      {% for container, available_quantity in containers %}
-      {% if available_quantity != 0 %}
-      <form action="{% url 'book_container' container.id %}" method="post" class="pbox">
-         {% csrf_token %}
-         <input type="hidden" name="user_id" value="{{ request.user.id }}">
-         <img class="image pic" src="{{ container.Image.url }}" alt="{{ container.Image.url }}">
-         <div><p class="pcontainer"><span>Container:</span> {{ container.Name }}</p></div>
-         <div><p class="pprice"><span>Price:</span> Rs {{ container.Price }}/-</pclass></div>
-         <div><p class="pdesc"><span>Description:</span> {{ container.description }}</p></div>
-         <div><p class="pavai"><span>Available Quantity:</span> {{ available_quantity }}</p></div>
-         <input class="pvalue" type="number" name="quantity" min="1" max="{{ available_quantity }}" value="1">
-         <input type="submit" value="Book Now" name="Booking" class="pbtn">
+         {% for container, available_quantity in containers %}
+            {% if available_quantity != 0 %}
+            <form action="{% url 'book_container' container.id %}" method="post" class="pbox">
+               {% csrf_token %}
+               <input type="hidden" name="user_id" value="{{ request.user.id }}">
+               <img class="image pic" src="{{ container.Image.url }}" alt="{{ container.Image.url }}">
+               <div><p class="pcontainer"><span>Container:</span> {{ container.Name }}</p></div>
+               <div><p class="pprice"><span>Price:</span> Rs {{ container.Price }}/-</p></div>
+               <div><p class="pdesc"><span>Description:</span> {{ container.description }}</p></div>
+               <div><p class="pavai"><span>Available Quantity:</span> {{ available_quantity }}</p></div>
+               <input class="pvalue" type="number" name="quantity" min="1" max="{{ available_quantity }}" value="1">
+               <input type="submit" value="Book Now" name="Booking" class="pbtn">
+            </form>
+            {% endif %}
+         {% endfor %}
+         {% if containers|length == 0 %}
+            <p style="font-size: 50px; user-select: none; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none;">No Containers Available</p>
          {% endif %}
-      </form>
-      {% endfor %}
       {% else %}
-      <p style="font-size: 50px; user-select: none; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none;">No Containers Available</p>
+         <p style="font-size: 50px; user-select: none; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none;">No Containers Available</p>
       {% endif %}
    </div>
 </section>
+
+<hr style="border: 1px solid black;">
 
 <section class="about">
 
