@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import SignupPage, LoginPage, HomePage, LogoutPage, AdminLoginPage, AdminPanel, Product_Data, \
     delete_product, Producr_Data_sep, Admin_Orders, Approve_product, Decline_Approve_Product, Admin_Users, \
-    book_container, Booking_view, AboutPage, Conditions, AdminLogoutPage
+    book_container, Booking_view, AboutPage, Conditions, AdminLogoutPage,ForgetPassword, ChangePassword
 from django.contrib.auth import views as auth_views
 
 # URLs to redirect to the help of html pages
@@ -29,6 +29,9 @@ urlpatterns = [
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='Reset '
                                                                                                 'Completed.html'
                                                                                   ), name='password_reset_complete'),
+
+    path('forget-password/', ForgetPassword, name='forget-password'),
+    path('change-password/<token>/', ChangePassword, name='change-password'),
 
     path('', SignupPage, name='Signup'),
     path('login/', LoginPage, name='login'),

@@ -6,12 +6,13 @@ from django.db.models import Sum
 
 #Create User details Store model
 class UserDetails(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     FullName = models.CharField(max_length=30)
     Phone = models.BigIntegerField()
     Gender = models.CharField(max_length=10)
     Address = models.CharField(max_length=50)
     TermAndConditions = models.BooleanField(default=True)
+    forget_password_token = models.CharField(max_length=100, default=None)
 
 #Create Containers Details Store model
 class Container(models.Model):

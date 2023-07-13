@@ -5,6 +5,42 @@
     <title>Reset Page</title>
         {% load static %}
     <link rel="stylesheet" href="{% static 'emailsent.css' %}">
+
+    <script>
+    function validatePassword() {
+    var newPassword = document.getElementById("new-password").value;
+    var confirmPassword = document.getElementById("confirm-password").value;
+    var validationMessage = document.getElementById("password-validation-message");
+
+    // Check if the password is too similar to personal information
+    if (newPassword.includes("{{user_id.username}}")) {
+        validationMessage.innerHTML = "Your password can't be too similar to your personal information.";
+        return;
+    }
+
+    // Check if the password contains at least 8 characters
+    if (newPassword.length < 8) {
+        validationMessage.innerHTML = "Your password must contain at least 8 characters.";
+        return;
+    }
+
+    // Check if the new password and confirm password match
+    if (newPassword !== confirmPassword) {
+        validationMessage.innerHTML = "New password and confirm password must be equal.";
+        return;
+    }
+
+    // Check if the password is entirely numeric
+    if (!/\D/.test(newPassword)) {
+        validationMessage.innerHTML = "Your password can't be entirely numeric.";
+        return;
+    }
+
+    // Clear the validation message if all conditions are met
+    validationMessage.innerHTML = "";
+}
+  </script>
+
 </head>
 <body>
 <div class="bg-image"></div>
@@ -15,20 +51,38 @@
       </div>
         <p>Please enter your new password twice, so we can verify you typed it in correctly.</p>
 
+
+          <div class="" id="password-validation-message" role="alert" style="color: red; text-align:center; background-color: #f8d7da; border-color: #f5c6cb;">
+        {% if messages %}
+          {% for message in messages %}
+              {{message}}
+          {% endfor %}
+          {% endif %}
+          </div>
       <form class="form" method="POST">
           {% csrf_token %}
+
+        {% if token %}
+          <div class="form-group">
+            <label for="new-password">New Password</label>
+            <input type="text" id="new-password" name="input-new_passowrd" placeholder="Enter your Password" required>
+        </div><div class="form-group">
+            <label for="confirm-password">New password confirmation</label>
+            <input type="text" id="confirm-password" name="input-confirm_password" placeholder="Enter your Confirm Password" required>
+        </div>
+
+        {% else %}
         <div class="form-group">
             {{ form.as_p }}
 <!--          <input type="text" id="email" name="email" placeholder="Enter your email" required="">-->
         </div>
+        {% endif %}
 
+          <input type="hidden" name="user_id" id="" value="{{user_id}}">
         <button class="form-submit-btn" type="submit">Change Password</button>
       </form>
 
-<!--      <p class="signup-link">-->
-<!--        Don't have an account?-->
-<!--        <a href="{% url 'Signup' %}" class="signup-link link"> Sign up now</a>-->
-<!--      </p>-->
+
     </div>
 </div>
 </body>

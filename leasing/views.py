@@ -1,8 +1,14 @@
+import uuid
+
+from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
+
 from .models import Container, Booking, UserDetails
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .helpers import send_forget_password_mail
 
 
 # Create your views here.
@@ -64,13 +70,78 @@ def SignupPage(request):
         user_instance = User.objects.get(id=user_id)
         # Store the newly created user details to store UserDetails model
         details = UserDetails(user=user_instance, FullName=fullname, Phone=phone, Gender=gender, Address=address,
-                              TermAndConditions=check)
+                              TermAndConditions=check, forget_password_token="New")
         details.full_clean()  # Validate the model instance
         details.save()  # save data
 
         return redirect('login')
 
     return render(request, 'UserRegistrations.html')
+
+
+def ChangePassword(request, token):
+    context = {}
+    try:
+        profile_obj = UserDetails.objects.filter(forget_password_token=token).first()
+        print(profile_obj)
+
+        if request.method == 'POST':
+            new_password = request.POST.get('input-new_passowrd')
+            confirm_password = request.POST.get('input-confirm_password')
+            user_id = request.POST.get('user_id')
+
+            if user_id is None:
+                messages.success(request, 'No user id found.')
+                return redirect(f'/change-password/{token}/')
+            if new_password != confirm_password:
+                messages.success(request, 'Both should me equal.')
+                return redirect(f'/change-password/{token}/')
+            if new_password and len(new_password) < 8:
+                messages.success(request, "Your password must contain at least 8 characters.")
+                return redirect(f'/change-password/{token}/')
+                # Check if the password is entirely numeric
+            if new_password and new_password.isdigit():
+                messages.success(request, "Your password can't be entirely numeric.")
+                return redirect(f'/change-password/{token}/')
+
+            # Set the new password and save the user object
+            user_obj = User.objects.get(id=user_id)
+            user_obj.set_password(new_password)
+            UserDetails.forget_password_token = ''  # Clear to forget password token
+            user_obj.save()
+            return render(request, 'Reset Completed.html')
+
+        context = {'user_id': profile_obj.user.id, 'token': token}
+
+
+    except Exception as e:
+        print(e)
+    return render(request, 'Reset.html', context)
+
+
+def ForgetPassword(request):
+    try:
+        if request.method == 'POST':
+            username = request.POST.get('input-username')
+
+            if not User.objects.filter(username=username).first():
+                messages.success(request, 'No User found with this username.')
+                return render(request, 'ResetPassword.html')
+            user_obj = User.objects.get(username=username)
+            token = str(uuid.uuid4())
+            profile_obj = UserDetails.objects.get(user=user_obj)
+            profile_obj.forget_password_token = token
+            profile_obj.save()
+            send_forget_password_mail(user_obj.email, token)
+            # messages.success(request, 'An email is send')
+            return render(request, 'Reset Send.html')
+
+    except ObjectDoesNotExist:
+        messages.error(request, 'user not exists.')
+        return redirect('/forget-password/')
+    except Exception as e:
+        print(e)
+    return render(request, 'ResetPassword.html')
 
 
 # verify the user login or not
